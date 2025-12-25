@@ -6,8 +6,10 @@ services:
     ports:
       - "8000:8000"
     volumes:
+      - ./src:/app/src
       - ./models:/app/models
       - ./outputs:/app/outputs
     environment:
       - PYTHONUNBUFFERED=1
     restart: unless-stopped
+    command: bash -c "python src/train.py && uvicorn src.api:app --host 0.0.0.0 --port 8000 --reload"
