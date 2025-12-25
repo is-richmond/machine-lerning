@@ -5,6 +5,7 @@ FastAPI приложение: предоставляет endpoint /predict и /m
 """
 
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Literal, Optional
 from src.predict import predict_from_dict, load_metrics
@@ -13,6 +14,20 @@ app = FastAPI(
     title="House Price Prediction API",
     description="API для прогнозирования медианной стоимости жилья (California Housing).",
     version="1.0.0",
+)
+
+
+origins = [
+    "http://localhost:3000",
+]
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
